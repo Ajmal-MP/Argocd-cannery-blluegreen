@@ -1,0 +1,47 @@
+#Deploying a rollout
+#Performing a canary update
+#Manual promotion
+#Manual abortion
+
+0) fitst setup argo rollout
+
+#Deploy the initial Rollout and Service
+
+1) Creation
+
+kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-rollouts/master/docs/getting-started/basic/rollout.yaml
+kubectl apply -f https://raw.githubusercontent.com/argoproj/argo-rollouts/master/docs/getting-started/basic/service.yaml
+
+    #to watch rollout 
+       kubectl argo rollouts get rollout <name of rollout> --watch
+
+2) Updation
+    # change version of image ==> Auto updation occurs
+        kubectl argo rollouts set image rollouts-demo \
+            rollouts-demo=argoproj/rollouts-demo:yellow
+
+3)Promote Rollout
+    # to promote newly created rollout
+    kubectl argo rollouts promote <name fo rollout>
+
+4)Aborting a rollout
+
+      a) create a new rollout
+            kubectl argo rollouts set image rollouts-demo \
+                rollouts-demo=argoproj/ 
+
+      b) aborting 
+           kubectl argo rollouts abort rollouts-demo
+
+           ** very important to change the degraged stage
+           # just change the rollout image name 
+                kubectl argo rollout set image rollouts-demo \
+                    rollouts-demo=argoproj/rollouts-demo:yellow
+            
+            Now we can see that ✔ changed from *
+
+
+
+In this guide, we have learned basic capabilities of Argo Rollouts, including:
+
+
